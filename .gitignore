@@ -1,0 +1,14 @@
+# viratual environment
+env/
+
+# database
+db.sqlite3
+
+# logs
+logs/
+
+# Keys and secrets
+.env
+
+# cache
+__pycache__/
