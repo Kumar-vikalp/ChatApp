@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -40,7 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    # External
+    "drf_spectacular",
+    "rest_framework",
+    # "corsheaders",
+    # Internal
+    "account",
+    "server",
+    # "webchat",
+
 ]
 
 MIDDLEWARE = [
@@ -125,3 +134,38 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "account.Account"
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "account.authenticate.JWTCookieAuthentication",
+    ],
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "vChat API",
+    "DESCRIPTION": "Your project description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": True,
+}
+
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_CREDENTIALS = True
+
+
+# CHANNEL_LAYERS = {
+#     "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"},
+# }
+
+# SIMPLE_JWT = {
+#     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+#     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+#     # JWTCookie
+#     "ACCESS_TOKEN_NAME": "access_token",
+#     "REFRESH_TOKEN_NAME": "refresh_token",
+#     "JWT_COOKIE_SAMESITE": "Lax",
+# }
